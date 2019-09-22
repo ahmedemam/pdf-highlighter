@@ -507,6 +507,7 @@
         var z = document.createElement('button'); 
         z.id = 'toolTip'
         z.name = 'Highlight'
+        
         z.className = 'tooltiptext'
         z.innerHTML = 'Highlight';
 
@@ -515,7 +516,9 @@
         if (this.options.onBeforeHighlight(range) === true) {
             const element = dom(this.el).getRange().startContainer.parentElement;
             element.className += ' tooltip';
-            element.appendChild(z);
+            z.style.top = element.style.top;
+            z.style.position = 'absolute';
+            element.parentElement.parentElement.appendChild(z);
         }
     };
 
