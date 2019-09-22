@@ -27,8 +27,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "node_modules/texthighlighterjs/build/TextHighlighter.min.js",
-              "node_modules/texthighlighter/index.js"
+              "src/assets/TextHighlighter.js"
             ]
           },
           "configurations": {

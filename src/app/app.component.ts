@@ -1,4 +1,4 @@
-import {Component, ElementRef} from '@angular/core';
+import {Component, ElementRef, ViewChild, ViewChildren} from '@angular/core';
 // import * as TextHighlighter from "texthighlighterjs";
 import {detectEncoding, detectFileEncoding} from 'char-encoding-detector';
 
@@ -10,34 +10,18 @@ declare const TextHighlighter: any;
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  @ViewChild('elm', {static: true}) elm: ElementRef;
   title = 'pdf-highlighter-texthighlighter';
   pdfSrc = './assets/compressed.tracemonkey-pldi-09.pdf';
   serialized: string;
-  private textHighlighter = new TextHighlighter(document.body);
-  // highlightsObjectArray: [];
-  // highlightedObject: IHighlightedObject;
-  // pdfHighlightedObjects: IPdfHighlightedObject;
-  // user: IUser;
+  private textHighlighter;
+
   constructor(private elr: ElementRef) {
-    // const textHighlighter = new TextHighlighter(document.body);
-    this.textHighlighter.setColor('green');
-    // this.user = {
-    //   id: 1,
-    //   name: 'Ahmed Abd Elaziz',
-    //   profession: 'Software Engineer',
-    //   image: 'image/profile.png'
-    // };
-    // this.pdfHighlightedObjects.user = this.user;
   }
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit(): void {
-    const values = JSON.parse(localStorage.getItem('a'));
-    console.log(values);
-    this.textHighlighter.normalizeHighlights(values);
-    // for (const element of values){
-    //   console.log(element.);
-    // }
+    this.textHighlighter = new TextHighlighter((this.elm as any).element.nativeElement);
   }
 
   onClearHighlight() {
