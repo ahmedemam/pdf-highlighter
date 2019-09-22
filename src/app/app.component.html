@@ -1,0 +1,20 @@
+
+<div>
+  <button (click)="onRequestObject()">Console</button>
+  <button (click)="onClearHighlight()">Clear Highlight</button>
+  <button (click)="onSerializeData()">Serialize</button>
+  <button (click)="onDeSerializedData()">DesSerialize</button>
+  <label>PDF Upload</label>
+  <input (click)="onFileSelected()" type="file" id="file">
+</div>
+<div id="pdf-content">
+  <pdf-viewer
+    [src]="pdfSrc"
+    [render-text]="true"
+    [render-text-mode]="1"
+    [show-all]="true"
+    style="display: block; background-color:lightgray;"
+  >
+  </pdf-viewer>
+</div>
+
