@@ -1,8 +1,13 @@
-import {Component, ElementRef, ViewChild, ViewChildren} from '@angular/core';
-// import * as TextHighlighter from "texthighlighterjs";
-import {detectEncoding, detectFileEncoding} from 'char-encoding-detector';
+import { Component, ElementRef, ViewChild, ViewChildren, Injectable } from '@angular/core';
+import { PdfViewerComponent } from 'ng2-pdf-viewer';
+import { WindowAndDocumentService } from './windowAndDocument.service';
 
 declare const TextHighlighter: any;
+
+
+// @Injectable({
+//   providedIn: 'app-root'
+// });
 
 @Component({
   selector: 'app-root',
@@ -10,17 +15,21 @@ declare const TextHighlighter: any;
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  @ViewChild('elm', {static: true}) elm: ElementRef;
+  @ViewChild('elm', { static: true }) elm: ElementRef;
   title = 'pdf-highlighter-texthighlighter';
   pdfSrc = './assets/compressed.tracemonkey-pldi-09.pdf';
+  ARABIC_CHARSETS = ['ء', 'ؤ', 'إ', 'ئ', 'ة', 'ى', 'و', 'ه', 'ن', 'م', 'ل', 'ك',
+    'ق', 'ف', 'غ', 'ع', 'ظ', 'ط', 'ض', 'ص', 'ش', 'س', 'ز', 'ر', 'ذ', 'د', 'خ', 'ح', 'ج', 'ث', 'ت', 'ب', 'أ'];
+  ARABIC_NUMBERS = [];
   serialized: string;
   private textHighlighter;
+  highlightStatus = true;
 
-  constructor(private elr: ElementRef) {
+  constructor(private elr: ElementRef, private windows: WindowAndDocumentService) {
+    console.log(this.windows);
   }
 
-  // tslint:disable-next-line:use-lifecycle-interface
-  ngOnInit(): void {
+  ngOnInit() {
     this.textHighlighter = new TextHighlighter((this.elm as any).element.nativeElement);
   }
 
@@ -28,13 +37,17 @@ export class AppComponent {
     this.textHighlighter.removeHighlights();
   }
 
-  onSerializeData(){
+  ngAfterContentInit(): void {
+
+  }
+
+  onSaveHighlight() {
     this.serialized = this.textHighlighter.serializeHighlights();
-    console.log(this.serialized);
+    // console.log(this.serialized);
     this.textHighlighter.removeHighlights();
   }
 
-  onDeSerializedData(){
+  onDoSavedHighlights() {
     this.textHighlighter.removeHighlights();
     this.textHighlighter.deserializeHighlights(this.serialized);
   }
@@ -50,58 +63,9 @@ export class AppComponent {
     }
   }
 
-  onRequestObject() {
-    const values = this.textHighlighter.getHighlights();
-    console.log(values);
-    // const dataObject = document.getElementsByClassName('highlighted');
-    // // console.log(dataObject);
-    // const highlightedObjects = [];
-    //
-    // for (let i = 0; i < dataObject.length ; i++) {
-    //   const highlightObject = {
-    //     index: i,
-    //     content: dataObject[i].textContent
-    //   };
-    //   highlightedObjects.push(highlightObject);
-    // }
-    // // this.highlightsObjectArray = highlightedObjects;
-    // console.log(highlightedObjects);
-    localStorage.setItem('a', JSON.stringify(values));
-    // console.log(this.textHighlighter.getHighlights());
-    // console.log(this.textHighlighter.serializeHighlights());
-  }
-  // tslint:disable-next-line:use-lifecycle-interface
-  ngAfterViewInit() {
-    console.log('ngAfterViewInit');
-  }
-
-  // onMakeHighlights(){
-  //   console.log(this.highlightsObjectArray);
-  //   const highlightedElementArray = this.highlightsObjectArray;
-  //   for (let element of highlightedElementArray){
-  //     this.textHighlighter.find(element.textContent);
-  // }
+  // onDetectArabicEncoding() {
+  //   for(let charachter in this.ARABIC_CHARSETS){
+  //     console.log(this.windows.window.find(charachter, false));
+  //   }
   // }
 }
-
-// interface IPdfHighlightedObject {
-//   PdfName: string;
-//   user: IUser;
-//   highlightedObjects: [IHighlightedObject];
-// }
-//
-// interface IHighlightedObject {
-//   index: number;
-//   content: string;
-//   // page: number; // get page of the dom element
-// }
-
-// interface IUser {
-//   id: number;
-//   name: string;
-//   profession: string;
-//   image: string;
-// }
-
-// (page-rendered)="pageRenderedEvent($event)"
-// (text-layer-rendered)="textLayerRenderEvent($event)"

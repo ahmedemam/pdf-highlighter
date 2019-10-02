@@ -14,7 +14,9 @@ import { FormsModule } from '@angular/forms';
     PdfViewerModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: 'Window',  useValue: window }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

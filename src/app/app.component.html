@@ -1,16 +1,18 @@
 
-<div>
-  <button (click)="onRequestObject()">Console</button>
-  <button (click)="onClearHighlight()">Clear Highlight</button>
-  <button (click)="onSerializeData()">Serialize</button>
-  <button (click)="onDeSerializedData()">DesSerialize</button>
-  <label>PDF Upload</label>
-  <input (click)="onFileSelected()" type="file" id="file">
+<div class='navbar'>
+  <button (click)="onSaveHighlight()">Save Highlights</button>
+  <button (click)="onDoSavedHighlights()">Do Highlights</button>
+  <button (click)="onClearHighlight()">Clear Highlights</button>
+  <!-- <button (click)="onDetectArabicEncoding()">Detect Arabic</button> -->
+
+<!--  <label>PDF Upload</label>-->
+<!--  <input (click)="onFileSelected()" type="file" id="file">-->
 </div>
 <div id="pdf-content">
   <pdf-viewer
     #elm
     [src]="pdfSrc"
+    [fit-to-page]="true"
     [render-text]="true"
     [render-text-mode]="1"
     [show-all]="true"
