@@ -9,13 +9,17 @@
 <!--  <input (click)="onFileSelected()" type="file" id="file">-->
 </div>
 <div id="pdf-content">
+  <div id="comment">
+</div>
   <pdf-viewer
+    (click)='dbClickDraw($event)'
     #elm
     [src]="pdfSrc"
     [fit-to-page]="true"
     [render-text]="true"
     [render-text-mode]="1"
     [show-all]="true"
+    (page-rendered)="pageRendered($event)"
     style="display: block; background-color:lightgray;"
   >
   </pdf-viewer>
